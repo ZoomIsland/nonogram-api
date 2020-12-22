@@ -17,10 +17,15 @@ const NonogramSchema = new mongoose.Schema({
     min: 5,
     max: 25
   },
-  // can I introduce logic here that forces the string to be length * width in length?
+
+  // add validation:
+  // length === this.length * this.width.
+  // values have RegEx of 0-7
   nonogramString: {
     type: String,
     required: true,
+    min: 25,
+    max: 625
   },
   colorArray: {
     type: Array,
@@ -32,7 +37,8 @@ const NonogramSchema = new mongoose.Schema({
   // can this default to False?
   approved: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   }
 })
 
