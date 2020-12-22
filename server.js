@@ -6,7 +6,9 @@ const PORT = 3000;
 const nonogramCtrl = require('./controllers/nonogramController');
 
 // For Middleware
-// BodyParser? Maybe Method Override?
+// Maybe Method Override?
+// BodyParser
+app.use(express.urlencoded({extended: false}));
 
 
 // Main route... maybe returns a message?
