@@ -24,8 +24,8 @@ const NonogramSchema = new mongoose.Schema({
   nonogramString: {
     type: String,
     required: true,
-    min: 25,
-    max: 625
+    minLength: 25,
+    maxLength: 625
   },
   colorArray: {
     type: Array,

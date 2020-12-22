@@ -11,5 +11,6 @@ mongoose.connect(connectionString, {
   .catch((err) => console.log(`MongoDB connection error: ${err}`));
 
 module.exports = {
-  Nonogram: require('./Nonogram')
+  Nonogram: require('./Nonogram'),
+  User: require('./User')
 }

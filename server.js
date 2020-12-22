@@ -4,6 +4,7 @@ const PORT = 3000;
 
 // Controllers
 const nonogramCtrl = require('./controllers/nonogramController');
+const authCtrl = require('./controllers/authController');
 
 // For Middleware
 // Maybe Method Override?
@@ -15,6 +16,9 @@ app.use(express.urlencoded({extended: false}));
 app.get('/', (req, res) => {
   res.send('Hello World!')
 });
+
+// Login/Register routes
+app.use('/', authCtrl);
 
 // Nonograms Routes
 app.use('/nonogram', nonogramCtrl);
