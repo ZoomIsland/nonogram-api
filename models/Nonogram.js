@@ -1,13 +1,21 @@
 const mongoose = require('mongoose');
 
+function nonogramLengthVal (val) {
+  return val === this.length * this.width;
+}
+
 const NonogramSchema = new mongoose.Schema({
   length: {
     type: Number,
     required: true,
+    min: 5,
+    max: 25
   },
   width: {
     type: Number,
     required: true,
+    min: 5,
+    max: 25
   },
   // can I introduce logic here that forces the string to be length * width in length?
   nonogramString: {
