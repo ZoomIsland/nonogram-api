@@ -5,6 +5,11 @@ function nonogramLengthVal (val) {
 }
 
 const NonogramSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    default: "untitled"
+  },
   length: {
     type: Number,
     required: true,
@@ -20,21 +25,20 @@ const NonogramSchema = new mongoose.Schema({
 
   // add validation:
   // length === this.length * this.width.
-  // values have RegEx of 0-7
   nonogramString: {
     type: String,
     required: true,
     minLength: 25,
-    maxLength: 625
+    maxLength: 625,
+    match: [/^[0-7]+$/, 'Provided solution includes more than digits 0-7'],
   },
   colorArray: {
-    type: Array,
+    type: [String],
     required: true,
   },
   // user id to be referenced, too. Putting it HERE (and not on array on the user)
   // because if a user deletes, I just want the ref gone, not the puzzle
 
-  // can this default to False?
   approved: {
     type: Boolean,
     required: true,
