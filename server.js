@@ -1,6 +1,7 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 // Controllers
 const nonogramCtrl = require('./controllers/nonogramController');
@@ -19,6 +20,10 @@ app.use(function (req, res, next) {
 
 // BodyParser
 app.use(express.urlencoded({extended: false}));
+
+// CORS
+// DON'T FORGET TO UPDATE corsOptions with whitelist when launching
+app.use(cors())
 
 
 // Main route...

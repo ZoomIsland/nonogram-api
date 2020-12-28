@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 function nonogramLengthVal (val) {
-  return val === this.length * this.width;
+  return val === this.height * this.width;
 }
 
 const NonogramSchema = new mongoose.Schema({
@@ -10,7 +10,7 @@ const NonogramSchema = new mongoose.Schema({
     required: true,
     default: "untitled"
   },
-  length: {
+  height: {
     type: Number,
     required: true,
     min: 5,
@@ -24,13 +24,13 @@ const NonogramSchema = new mongoose.Schema({
   },
 
   // add validation:
-  // length === this.length * this.width.
+  // length === this.height * this.width.
   nonogramString: {
     type: String,
     required: true,
     minLength: 25,
     maxLength: 625,
-    match: [/^[0-7]+$/, 'Provided solution includes more than digits 0-7'],
+    match: [/^[0-7X]+$/, 'Provided solution includes more than digits 0-7 or character X'],
   },
   colorArray: {
     type: [String],
