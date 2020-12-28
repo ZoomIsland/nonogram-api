@@ -20,6 +20,7 @@ router.get('/:id/', (req, res) => {
 
 // Create route
 router.post('/', (req, res) => {
+  console.log("post route")
   console.log(req.body);
   // does anything need to happen prior to post?
   db.Nonogram.create(req.body, (err, newNonogram) => {

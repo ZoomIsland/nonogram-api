@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3001;
 
@@ -19,7 +20,8 @@ app.use(function (req, res, next) {
 })
 
 // BodyParser
-app.use(express.urlencoded({extended: false}));
+// app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // CORS
 // DON'T FORGET TO UPDATE corsOptions with whitelist when launching
