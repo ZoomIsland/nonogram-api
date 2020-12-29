@@ -25,12 +25,18 @@ const NonogramSchema = new mongoose.Schema({
 
   // add validation:
   // length === this.height * this.width.
-  nonogramString: {
-    type: String,
+  // Currently testing array of arrays instead (not sure about validation there...)
+  // nonogramString: {
+  //   type: String,
+  //   required: true,
+  //   minLength: 25,
+  //   maxLength: 625,
+  //   match: [/^[0-7X]+$/, 'Provided solution includes more than digits 0-7 or character X'],
+  // },
+
+  nonogramArray: {
+    type: [[]],
     required: true,
-    minLength: 25,
-    maxLength: 625,
-    match: [/^[0-7X]+$/, 'Provided solution includes more than digits 0-7 or character X'],
   },
   colorArray: {
     type: [String],
