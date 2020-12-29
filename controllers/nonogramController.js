@@ -4,9 +4,18 @@ const db = require('../models/');
 
 // Index route
 router.get('/', (req, res) => {
-  db.Nonogram.find({}, (err, foundNonogram) => {
+  db.Nonogram.find({}, (err, foundNonograms) => {
     if (err) return console.log(err);
-    res.send(foundNonogram);
+    res.send(foundNonograms);
+  })
+})
+
+// Random route
+router.get('/random/', (req, res) => {
+  db.Nonogram.find({}, (err, foundNonograms) => {
+    if (err) return console.log(err);
+    let randomIndex = Math.floor(Math.random() * foundNonograms.length);
+    res.send(foundNonograms[randomIndex]);
   })
 })
 
