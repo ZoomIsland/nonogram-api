@@ -22,6 +22,13 @@ const NonogramSchema = new mongoose.Schema({
     min: 5,
     max: 25
   },
+  gridSize: {
+    type: Number,
+    required: true,
+    default: function() {
+      return this.height * this.width
+    }
+  },
   nonogramArray: {
     type: [[]],
     required: true,

@@ -5,19 +5,20 @@ const db = require('../models/');
 // Index route
 router.get('/index/:id', (req, res) => {
   console.log(req.params)
-  db.Nonogram.find({}, (err, foundNonograms) => {
-    if (err) return console.log(err);
-    const length = foundNonograms.length;
-    const limit = 2;
-    db.Nonogram.find({}, {}, {skip: ((req.params.id) * limit), limit: limit}, (err, foundNonograms) => {
-      if (err) return console.log(err);
-      res.send({
-        nonograms: foundNonograms,
-        length: length
-      });
+  db.Nonogram.find({}).lean()
+    .then(foundNonograms => {
+      const length = foundNonograms.length;
+      const limit = 2;
+      db.Nonogram.find({}, {}, {skip: ((req.params.id) * limit), limit: limit}, (err, foundNonograms) => {
+        if (err) return console.log(err);
+        res.send({
+          nonograms: foundNonograms,
+          length: length
+        });
+      })
     })
+    .catch(error => console.log(error))
   })
-})
 
 // Random route
 router.get('/random/', (req, res) => {
