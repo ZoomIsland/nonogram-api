@@ -3,10 +3,19 @@ const router = express.Router();
 const db = require('../models/');
 
 // Index route
-router.get('/', (req, res) => {
+router.get('/index/:id', (req, res) => {
+  console.log(req.params)
   db.Nonogram.find({}, (err, foundNonograms) => {
     if (err) return console.log(err);
-    res.send(foundNonograms);
+    const length = foundNonograms.length;
+    const limit = 2;
+    db.Nonogram.find({}, {}, {skip: ((req.params.id) * limit), limit: limit}, (err, foundNonograms) => {
+      if (err) return console.log(err);
+      res.send({
+        nonograms: foundNonograms,
+        length: length
+      });
+    })
   })
 })
 
@@ -44,13 +53,14 @@ router.post('/', (req, res) => {
 
 // Update route (should only be for the user or admin)
 router.put('/:id/', (req, res) => {
+  console.log(req.body)
   db.Nonogram.findByIdAndUpdate(
     req.params.id,
     req.body,
     {new: true},
     (err, updatedNonogram) => {
       if (err) return console.log(err);
-      res.send(updatedNonogram)
+      res.send(updatedNonogram);
       // probably should redirect to the page itself
       // res.redirect('/:id/');
     }

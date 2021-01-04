@@ -22,18 +22,6 @@ const NonogramSchema = new mongoose.Schema({
     min: 5,
     max: 25
   },
-
-  // add validation:
-  // length === this.height * this.width.
-  // Currently testing array of arrays instead (not sure about validation there...)
-  // nonogramString: {
-  //   type: String,
-  //   required: true,
-  //   minLength: 25,
-  //   maxLength: 625,
-  //   match: [/^[0-7X]+$/, 'Provided solution includes more than digits 0-7 or character X'],
-  // },
-
   nonogramArray: {
     type: [[]],
     required: true,
@@ -41,6 +29,11 @@ const NonogramSchema = new mongoose.Schema({
   colorArray: {
     type: [String],
     required: true,
+  },
+  dateCreated: {
+    type: Date,
+    required: true,
+    default: Date.now()
   },
   // user id to be referenced, too. Putting it HERE (and not on array on the user)
   // because if a user deletes, I just want the ref gone, not the puzzle
