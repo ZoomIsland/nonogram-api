@@ -3,19 +3,41 @@ const router = express.Router();
 const db = require('../models/');
 
 // Index route
-router.get('/index/:id', (req, res) => {
+router.get('/index/:filter/:id', (req, res) => {
   console.log(req.params)
   db.Nonogram.find({}).lean()
     .then(foundNonograms => {
       const length = foundNonograms.length;
       const limit = 2;
-      db.Nonogram.find({}, {}, {skip: ((req.params.id) * limit), limit: limit}, (err, foundNonograms) => {
-        if (err) return console.log(err);
+      let filter;
+      switch (req.params.filter) {
+        case "newest":
+          filter = {dateCreated: 'desc'};
+          break;
+        case "oldest":
+          filter = {dateCreated: 'asc'};
+          break;
+        case "smallest":
+          filter = {gridSize: 'desc'};
+          break;
+        case "biggest":
+          filter = {gridSize: 'asc'};
+          break;
+        default: 
+          filter = {};
+      }
+      console.log(filter)
+      db.Nonogram.find({})
+      .sort(filter)
+      .limit(limit)
+      .skip(req.params.id * limit)
+      .then(foundNonograms => {
         res.send({
           nonograms: foundNonograms,
           length: length
         });
       })
+      .catch(error => console.log(error))
     })
     .catch(error => console.log(error))
   })
