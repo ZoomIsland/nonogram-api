@@ -61,9 +61,87 @@ router.get('/:id/', (req, res) => {
 
 // Create route
 router.post('/', (req, res) => {
-  console.log("post route")
-  console.log(req.body);
-  // does anything need to happen prior to post?
+  // remove any initial or ending rows that are all Xs
+  let nonogram = [...req.body.nonogramArray];
+  let nothingYet = true;
+  let index = 0;
+  // testing/splicing first rows
+  for (let i = 0; i < nonogram.length; i++) {
+    if (nothingYet) {
+      index = i;
+      for (let j = 0; j < nonogram[i].length; j++) {
+        if (nonogram[i][j] !== "X") {
+          nothingYet = false;
+        }
+      }
+    }
+  }
+  nonogram = nonogram.splice(index, nonogram.length);
+  // testing/splicing last rows
+  nothingYet = true;
+  for (let i = nonogram.length - 1; i > 0; i--) {
+    if (nothingYet) {
+      index = i;
+      for (let j = 0; j < nonogram[i].length; j++) {
+        if (nonogram[i][j] !== "X") {
+          nothingYet = false;
+        }
+      }
+    }
+  }
+  nonogram = nonogram.splice(0, index +1);
+
+  // testing/splice first columns
+  nothingYet = true;
+  for (let i = 0; i < nonogram[0].length; i++) {
+    if (nothingYet) {
+      index = i;
+      for (let j = 0; j < nonogram.length; j++) {
+        if (nonogram[j][i] !== "X") {
+          nothingYet = false;
+        }
+      }
+    }
+  }
+  for (let i = 0; i < nonogram.length; i++) {
+    nonogram[i] = nonogram[i].splice(index, nonogram[i].length);
+  }
+
+  // testing/splicing last columns
+  nothingYet = true;
+  for (let i = nonogram[0].length - 1; i > 0; i--) {
+    if (nothingYet) {
+      index = i;
+      for (let j = 0; j < nonogram.length; j++) {
+        if (nonogram[j][i] !== "X") {
+          nothingYet = false;
+        }
+      }
+    }
+  }
+  for (let i = 0; i < nonogram.length; i++) {
+    nonogram[i] = nonogram[i].splice(0, index + 1);
+  }
+
+  //double check that all color indexes are in us
+  // if one isn't, 
+    // remove from colors array
+    // revise all numbers down by one (if greater than index)
+  
+  // update req.body
+  let updatesToNonoObj = {};
+  //update height
+  updatesToNonoObj.height = nonogram.length;
+  //update width
+  updatesToNonoObj.width = nonogram[0].length;
+  updatesToNonoObj.nonogramArray = nonogram;
+  Object.assign(req.body, updatesToNonoObj);
+
+
+  // res.send("okay!")
+  
+  
+  //create object with updated req.body
   db.Nonogram.create(req.body, (err, newNonogram) => {
     if (err) return console.log(err);
     console.log(newNonogram);
