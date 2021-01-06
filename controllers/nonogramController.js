@@ -124,6 +124,29 @@ router.post('/', (req, res) => {
   }
 
   //double check that all color indexes are in us
+  console.log(nonogram)
+  let nonoString = nonogram.flat().join("");
+  let colors = [...req.body.colorArray];
+  console.log(colors)
+  for (let i = 0; i < colors.length; i++) {
+    console.log(i)
+    console.log(colors[i])
+    if (nonoString.indexOf(i) === -1) {
+      colors.splice(i, 1);
+      i--;
+      for (let j = 0; j < nonogram.length; j++) {
+        for (let k = 0; k < nonogram[i].length; k++) {
+          let currentValue = nonogram[j][k];
+          if (currentValue > i) {
+            nonogram[j][k] = currentValue - 1;
+          }
+        }
+      }
+      nonoString = nonogram.flat().join("")
+    }
+  }
+  console.log(colors)
+  console.log(nonogram)
   // if one isn't, 
     // remove from colors array
     // revise all numbers down by one (if greater than index)
@@ -134,7 +157,11 @@ router.post('/', (req, res) => {
   updatesToNonoObj.height = nonogram.length;
   //update width
   updatesToNonoObj.width = nonogram[0].length;
+  //update nonogram
   updatesToNonoObj.nonogramArray = nonogram;
+  //update colors
+  updatesToNonoObj.colorArray = colors;
+
   Object.assign(req.body, updatesToNonoObj);
 
 
