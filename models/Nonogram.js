@@ -40,7 +40,7 @@ const NonogramSchema = new mongoose.Schema({
   dateCreated: {
     type: Date,
     required: true,
-    default: Date.now()
+    default: Date.now
   },
   // user id to be referenced, too. Putting it HERE (and not on array on the user)
   // because if a user deletes, I just want the ref gone, not the puzzle

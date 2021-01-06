@@ -6,7 +6,8 @@ const db = require('../models/');
 router.get('/index/:filter/:id', (req, res) => {
   console.log(req.params)
   db.Nonogram.find({}).lean()
-    .then(foundNonograms => {
+    .exec((err,foundNonograms) => {
+      if (err) return console.log(err)
       const length = foundNonograms.length;
       const limit = 2;
       let filter;
@@ -18,10 +19,10 @@ router.get('/index/:filter/:id', (req, res) => {
           filter = {dateCreated: 'asc'};
           break;
         case "smallest":
-          filter = {gridSize: 'desc'};
+          filter = {gridSize: 'asc'};
           break;
         case "biggest":
-          filter = {gridSize: 'asc'};
+          filter = {gridSize: 'desc'};
           break;
         default: 
           filter = {};
@@ -29,17 +30,16 @@ router.get('/index/:filter/:id', (req, res) => {
       console.log(filter)
       db.Nonogram.find({})
       .sort(filter)
-      .limit(limit)
-      .skip(req.params.id * limit)
-      .then(foundNonograms => {
+      // .limit(limit)
+      // .skip(req.params.id * limit)
+      .exec((err, foundNonograms) => {
+        if (err) return console.log(err)
         res.send({
           nonograms: foundNonograms,
           length: length
         });
       })
-      .catch(error => console.log(error))
     })
-    .catch(error => console.log(error))
   })
 
 // Random route
