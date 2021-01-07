@@ -9,7 +9,7 @@ router.get('/index/:filter/:id', (req, res) => {
     .exec((err,foundNonograms) => {
       if (err) return console.log(err)
       const length = foundNonograms.length;
-      const limit = 2;
+      const limit = 10;
       let filter;
       switch (req.params.filter) {
         case "newest":
@@ -30,8 +30,8 @@ router.get('/index/:filter/:id', (req, res) => {
       console.log(filter)
       db.Nonogram.find({})
       .sort(filter)
-      // .limit(limit)
-      // .skip(req.params.id * limit)
+      .limit(limit)
+      .skip(req.params.id * limit)
       .exec((err, foundNonograms) => {
         if (err) return console.log(err)
         res.send({
@@ -135,7 +135,7 @@ router.post('/', (req, res) => {
       colors.splice(i, 1);
       i--;
       for (let j = 0; j < nonogram.length; j++) {
-        for (let k = 0; k < nonogram[i].length; k++) {
+        for (let k = 0; k < nonogram[j].length; k++) {
           let currentValue = nonogram[j][k];
           if (currentValue > i) {
             nonogram[j][k] = currentValue - 1;
