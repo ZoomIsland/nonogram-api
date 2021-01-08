@@ -153,11 +153,6 @@ router.post('/', (req, res) => {
       nonoString = nonogram.flat().join("")
     }
   }
-  console.log(colors)
-  console.log(nonogram)
-  // if one isn't, 
-    // remove from colors array
-    // revise all numbers down by one (if greater than index)
   
   // update req.body
   let updatesToNonoObj = {};

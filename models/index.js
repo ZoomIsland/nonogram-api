@@ -12,5 +12,6 @@ mongoose.connect(connectionString, {
 
 module.exports = {
   Nonogram: require('./Nonogram'),
-  User: require('./User')
+  User: require('./User'),
+  UserNonogram: require('./UserNonogram'),
 }
