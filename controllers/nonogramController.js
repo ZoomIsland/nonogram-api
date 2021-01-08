@@ -76,7 +76,9 @@ router.post('/', (req, res) => {
       }
     }
   }
-  nonogram = nonogram.splice(index, nonogram.length);
+  if (!nothingYet) {
+    nonogram = nonogram.splice(index, nonogram.length);
+  }
   // testing/splicing last rows
   nothingYet = true;
   for (let i = nonogram.length - 1; i > 0; i--) {
@@ -89,7 +91,9 @@ router.post('/', (req, res) => {
       }
     }
   }
-  nonogram = nonogram.splice(0, index +1);
+  if (!nothingYet) {
+    nonogram = nonogram.splice(0, index +1);
+  }
 
   // testing/splice first columns
   nothingYet = true;
@@ -103,8 +107,10 @@ router.post('/', (req, res) => {
       }
     }
   }
-  for (let i = 0; i < nonogram.length; i++) {
-    nonogram[i] = nonogram[i].splice(index, nonogram[i].length);
+  if (!nothingyet) {
+    for (let i = 0; i < nonogram.length; i++) {
+      nonogram[i] = nonogram[i].splice(index, nonogram[i].length);
+    }
   }
 
   // testing/splicing last columns
@@ -119,8 +125,10 @@ router.post('/', (req, res) => {
       }
     }
   }
-  for (let i = 0; i < nonogram.length; i++) {
-    nonogram[i] = nonogram[i].splice(0, index + 1);
+  if (!nothingYet) {
+    for (let i = 0; i < nonogram.length; i++) {
+      nonogram[i] = nonogram[i].splice(0, index + 1);
+    }
   }
 
   //double check that all color indexes are in us
